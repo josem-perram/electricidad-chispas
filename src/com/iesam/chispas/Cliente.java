@@ -1,3 +1,5 @@
+package com.iesam.chispas;
+
 public interface Cliente {
     public Integer getCodCliente();
 

@@ -1,3 +1,5 @@
+package com.iesam.chispas;
+
 public class Main {
 
     public static void main(String args[]) {
@@ -31,21 +33,23 @@ public class Main {
 
     /**
      * No optimo
+     *
      * @param autonomo
      */
-    public static void printAutonomos(Autonomo autonomo){
+    public static void printAutonomos(Autonomo autonomo) {
         System.out.println("Cod: " + autonomo.getCodCliente() + " Nombre: " + autonomo.getNombre());
     }
 
     /**
      * No optimo
+     *
      * @param sociedad
      */
-    public static void printSociedades(Sociedad sociedad){
+    public static void printSociedades(Sociedad sociedad) {
         System.out.println("Cod: " + sociedad.getCodCliente() + " Nombre: " + sociedad.getNombre());
     }
 
-    public static void printCliente(Cliente cliente){
+    public static void printCliente(Cliente cliente) {
         System.out.println("Cod: " + cliente.getCodCliente() + " Nombre: " + cliente.getNombre());
     }
 }

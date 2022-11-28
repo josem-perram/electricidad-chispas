@@ -1,7 +1,10 @@
-public class Sociedad implements Cliente{
+package com.iesam.chispas;
+
+public class Autonomo implements Cliente {
     private Integer codCliente;
-    private String razonSocial;
-    private String nif;
+    private String nombre;
+    private String apellidos;
+    private String dni;
     private String direccion;
     private String poblacion;
     private String provincia;
@@ -15,32 +18,32 @@ public class Sociedad implements Cliente{
 
     @Override
     public String getNombre() {
-        return razonSocial;
+        return this.nombre + " " + this.apellidos;
     }
 
     @Override
     public String getDireccion() {
-        return direccion;
+        return this.direccion;
     }
 
     @Override
     public String getPoblacion() {
-        return poblacion;
+        return this.poblacion;
     }
 
     @Override
     public String getProvincia() {
-        return provincia;
+        return this.provincia;
     }
 
     @Override
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     @Override
     public String getTelefono() {
-        return telefono;
+        return this.telefono;
     }
 
 
@@ -48,20 +51,24 @@ public class Sociedad implements Cliente{
         this.codCliente = codCliente;
     }
 
-    public String getRazonSocial() {
-        return razonSocial;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public String getNif() {
-        return nif;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public void setNif(String nif) {
-        this.nif = nif;
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public void setDireccion(String direccion) {
