@@ -1,4 +1,4 @@
-package com.iesam.chispas;
+package com.iesam.chispas.domain.models;
 
 public interface Cliente {
     public Integer getCodCliente();

@@ -1,6 +1,6 @@
-package com.iesam.chispas;
+package com.iesam.chispas.domain.models;
 
-public class Sociedad implements Cliente{
+public class Sociedad implements Cliente {
     private Integer codCliente;
     private String razonSocial;
     private String nif;

@@ -1,6 +1,6 @@
 package com.iesam.chispas.data;
 
-import com.iesam.chispas.Cliente;
+import com.iesam.chispas.domain.models.Cliente;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -16,7 +16,7 @@ public class MemCustomerDataStore implements CustomerDataStore {
 
     @Override
     public void deleteCustomer(Cliente cliente) {
-        dataStore.remove(cliente);
+        dataStore.remove(cliente.getCodCliente());
     }
 
     @Override

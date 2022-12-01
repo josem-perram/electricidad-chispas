@@ -1,4 +1,4 @@
-package com.iesam.chispas;
+package com.iesam.chispas.domain.models;
 
 public class Autonomo implements Cliente {
     private Integer codCliente;
