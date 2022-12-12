@@ -1,7 +1,8 @@
 package com.iesam.chispas.domain.models;
 
 public interface Cliente {
-    public Integer getCodCliente();
+
+    public String getNumId();
 
     public String getNombre();
 
@@ -10,8 +11,4 @@ public interface Cliente {
     public String getPoblacion();
 
     public String getProvincia();
-
-    public String getEmail();
-
-    public String getTelefono();
 }

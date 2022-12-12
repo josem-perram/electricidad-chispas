@@ -1,20 +1,22 @@
 package com.iesam.chispas.presentation;
 
-import com.iesam.chispas.data.CustomerDataStore;
-import com.iesam.chispas.data.MemCustomerDataStore;
-import com.iesam.chispas.domain.models.Autonomo;
-import com.iesam.chispas.domain.models.Cliente;
-import com.iesam.chispas.domain.models.Sociedad;
-import com.iesam.chispas.domain.usecase.AddCustomerUseCase;
-import com.iesam.chispas.domain.usecase.DeleteCustomerUseCase;
-import com.iesam.chispas.domain.usecase.GetCustomersUseCase;
-import com.iesam.chispas.domain.usecase.UpdateCustomerUseCase;
+import com.iesam.chispas.domain.models.*;
+import com.iesam.chispas.domain.usecase.*;
 
-import java.util.List;
+import java.util.Date;
 
 public class Main {
 
     public static void main(String args[]) {
+        Main main = new Main();
+        main.crearClientes();
+        main.crearItems();
+        main.crearFactura();
+        main.mostrarFactura();
+    }
+
+    private void crearClientes() {
+        //Creación cliente Autónomo
         Autonomo autonomo = new Autonomo();
         autonomo.setCodCliente(1);
         autonomo.setNombre("Chema");
@@ -26,69 +28,92 @@ public class Main {
         autonomo.setEmail("email@email.es");
         autonomo.setTelefono("600000000");
 
+        //Creación cliente Sociedad
         Sociedad sociedad = new Sociedad();
         sociedad.setCodCliente(2);
         sociedad.setRazonSocial("Empresa S.L");
         sociedad.setPoblacion("Madrid");
         sociedad.setProvincia("Madrid");
         sociedad.setDireccion("Av. Madrid");
-        sociedad.setNif("11111111X");
+        sociedad.setCif("11111111X");
         sociedad.setEmail("email@email.com");
         sociedad.setTelefono("70000000");
 
-        //No optimo -> printAutonomos(autonomo);
-        //No optimo -> printSociedades(sociedad);
-
-        CustomerDataStore customerDataStore = new MemCustomerDataStore();
-
-        AddCustomerUseCase addCustomerUseCase = new AddCustomerUseCase(customerDataStore);
-        addCustomerUseCase.execute(autonomo);
-        addCustomerUseCase.execute(sociedad);
-
-        GetCustomersUseCase getCustomersUseCase = new GetCustomersUseCase(customerDataStore);
-        List<Cliente> customers = getCustomersUseCase.execute();
-        for (int i = 0; i < customers.size(); i++) {
-            printCliente(customers.get(i));
-        }
-
-        System.out.println("----- Eliminando ------");
-
-        DeleteCustomerUseCase deleteCustomerUseCase = new DeleteCustomerUseCase(customerDataStore);
-        deleteCustomerUseCase.execute(autonomo);
-        List<Cliente> customers2 = getCustomersUseCase.execute();
-        for (int i = 0; i < customers2.size(); i++) {
-            printCliente(customers2.get(i));
-        }
-
-        System.out.println("----- Modificando la Sociedad ------");
-        sociedad.setEmail("0000000000");
-        UpdateCustomerUseCase updateCustomerUseCase = new UpdateCustomerUseCase(customerDataStore);
-        updateCustomerUseCase.execute(sociedad);
-        List<Cliente> customers3 = getCustomersUseCase.execute();
-        for (int i = 0; i < customers3.size(); i++) {
-            printCliente(customers3.get(i));
-        }
+        //Creo un caso de uso para crear clientes. Primero ejecuto el autónomo y después la sociedad
+        CrearClienteUseCase crearClienteUseCase = new CrearClienteUseCase();
+        crearClienteUseCase.execute(autonomo);
+        crearClienteUseCase.execute(sociedad);
     }
 
-    /**
-     * No optimo
-     *
-     * @param autonomo
-     */
-    public static void printAutonomos(Autonomo autonomo) {
-        System.out.println("Cod: " + autonomo.getCodCliente() + " Nombre: " + autonomo.getNombre());
+    private void crearItems() {
+        Producto bombilla = new Producto();
+        bombilla.setCodProducto(1);
+        bombilla.setNombre("Bombilla");
+        bombilla.setMarca("JBL");
+        bombilla.setModelo("XSDF-1022");
+        bombilla.setPrecio(1.5);
+        bombilla.setTipoIva(0.21);
+
+        Producto enchufe = new Producto();
+        enchufe.setCodProducto(2);
+        enchufe.setNombre("Enchufe");
+        enchufe.setMarca("Schuco 123");
+        enchufe.setModelo("White");
+        enchufe.setPrecio(2.5);
+        enchufe.setTipoIva(0.21);
+
+        Servicio manoDeObra = new Servicio();
+        manoDeObra.setCodServicio(3);
+        manoDeObra.setNombre("Mano de Obra");
+        manoDeObra.setPrecio(30.0);
+        manoDeObra.setTipoIva(0.21);
+
+        Servicio desplazamiento = new Servicio();
+        desplazamiento.setCodServicio(4);
+        desplazamiento.setNombre("Desplazamiento");
+        desplazamiento.setPrecio(0.19);
+        desplazamiento.setTipoIva(0.21);
+
+        CrearItemUseCase crearItemUseCase = new CrearItemUseCase();
+        crearItemUseCase.execute(bombilla);
+        crearItemUseCase.execute(enchufe);
+        crearItemUseCase.execute(manoDeObra);
+        crearItemUseCase.execute(desplazamiento);
     }
 
-    /**
-     * No optimo
-     *
-     * @param sociedad
-     */
-    public static void printSociedades(Sociedad sociedad) {
-        System.out.println("Cod: " + sociedad.getCodCliente() + " Nombre: " + sociedad.getNombre());
+    private void crearFactura() {
+        Factura factura = new Factura(); //<- Creo la factura
+        factura.setCodFactura(1);
+        factura.setFechaFactura(new Date());
+        factura.setBaseImponible(30.0);
+        factura.setTotal(120.00);
+
+        //Recupero un cliente al azar y le añado a la factura
+        ObtenerClienteUseCase obtenerClienteUseCase = new ObtenerClienteUseCase();
+        Cliente cliente = obtenerClienteUseCase.execute("00000000A");
+
+        factura.setCliente(cliente);
+
+        //Recupero productos y los añado a la factura
+        ObtenerItemUseCase obtenerItemUseCase = new ObtenerItemUseCase();
+        Item enchufe = obtenerItemUseCase.execute(2);
+        Item manoDeObra = obtenerItemUseCase.execute(3);
+
+        factura.addItem(enchufe);
+        factura.addItem(manoDeObra);
+
+        //Crear la factura
+        CrearFacturaUseCase crearFacturaUseCase = new CrearFacturaUseCase();
+        crearFacturaUseCase.execute(factura);
     }
 
-    public static void printCliente(Cliente cliente) {
-        System.out.println("Cod: " + cliente.getCodCliente() + " Nombre: " + cliente.getNombre() + " Email: " + cliente.getEmail());
+    private void mostrarFactura() {
+        //Recupero la factura
+        ObtenerFacturaUseCase obtenerFacturaUseCase = new ObtenerFacturaUseCase();
+        Factura factura = obtenerFacturaUseCase.execute(1);
+
+        //Imprimo la factura
+        PrintFactura printFactura = new PrintFactura();
+        printFactura.print(factura);
     }
 }

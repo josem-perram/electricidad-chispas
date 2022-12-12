@@ -3,16 +3,20 @@ package com.iesam.chispas.domain.models;
 public class Sociedad implements Cliente {
     private Integer codCliente;
     private String razonSocial;
-    private String nif;
+    private String cif;
     private String direccion;
     private String poblacion;
     private String provincia;
     private String email;
     private String telefono;
 
-    @Override
     public Integer getCodCliente() {
         return this.codCliente;
+    }
+
+    @Override
+    public String getNumId() {
+        return this.cif;
     }
 
     @Override
@@ -35,12 +39,10 @@ public class Sociedad implements Cliente {
         return provincia;
     }
 
-    @Override
     public String getEmail() {
         return email;
     }
 
-    @Override
     public String getTelefono() {
         return telefono;
     }
@@ -58,12 +60,12 @@ public class Sociedad implements Cliente {
         this.razonSocial = razonSocial;
     }
 
-    public String getNif() {
-        return nif;
+    public String getCif() {
+        return cif;
     }
 
-    public void setNif(String nif) {
-        this.nif = nif;
+    public void setCif(String cif) {
+        this.cif = cif;
     }
 
     public void setDireccion(String direccion) {

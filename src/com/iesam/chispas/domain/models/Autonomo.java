@@ -11,9 +11,13 @@ public class Autonomo implements Cliente {
     private String email;
     private String telefono;
 
-    @Override
     public Integer getCodCliente() {
         return this.codCliente;
+    }
+
+    @Override
+    public String getNumId() {
+        return this.dni;
     }
 
     @Override
@@ -36,16 +40,13 @@ public class Autonomo implements Cliente {
         return this.provincia;
     }
 
-    @Override
     public String getEmail() {
         return this.email;
     }
 
-    @Override
     public String getTelefono() {
         return this.telefono;
     }
-
 
     public void setCodCliente(Integer codCliente) {
         this.codCliente = codCliente;
@@ -90,4 +91,5 @@ public class Autonomo implements Cliente {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
 }
